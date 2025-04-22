@@ -17,6 +17,9 @@ class ContactAdmin(admin.ModelAdmin):
     # Maximo de valores que podem ser apresentados em mostrar tudo
     list_max_show_all = 100
 
-
-
+@admin.register(models.Category)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+    ordering = ('-id',)
+    
 
