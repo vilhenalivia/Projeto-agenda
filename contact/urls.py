@@ -7,7 +7,11 @@ app_name = 'contact'
 urlpatterns = [
     # Caminho princial - vazio
     path('', views.index, name='index'), #type: ignore
-     # Caminho para contato único - Pega como parametro um inteiro que seriao ID do contato
+
+    # Caminho para contato único - Pega como parametro um inteiro que seria o ID do contato
     # OBS: por padrão, sempre colocar uma barra final para não gerar problemas
     path('<int:contact_id>/', views.contact, name='contact'), #type: ignore
+
+    # Caminho search no mesmo index
+    path('search/', views.search, name='search'), 
 ]
