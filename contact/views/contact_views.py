@@ -1,7 +1,9 @@
 # Importa algo para deixar usar o OU em uma query
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
+from django.core.paginator import Paginator
 from contact.models import Contact
+
 
 
 # View index
@@ -9,10 +11,15 @@ def index(request):
 
     # Objeto novo de contato chamado CONTACTS
     # Filtra os dados com Show = A true e ordens por Id decrescente
-    contacts = Contact.objects.filter(show = True).order_by('-id')[10:20]
+    contacts = Contact.objects.filter(show = True).order_by('-id')
+    # Paginação
+    # Instancia da lista contacts e 25 itens por paina
+    paginator = Paginator(contacts,25) # Quantidade de contatos por pagina
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
 
     # Transforma contato em um dicionário
-    context = {'contacts' : contacts, }
+    context = {'page_obj' : page_obj, }
 
     return render(request, 'contact/index.html', context)
 
@@ -37,10 +44,16 @@ def search(request):
             Q(email__icontains=search_value)
         )\
         .order_by('-id')
+    
+    # Paginação
+    # Instancia da lista contacts e 25 itens por paina
+    paginator = Paginator(contacts,25) # Quantidade de contatos por pagina
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
 
     # Transforma contato em um dicionário
     context = {
-        'contacts' : contacts , 
+        'page_obj' : page_obj , 
         'site_title': 'Search - '
     }
 
