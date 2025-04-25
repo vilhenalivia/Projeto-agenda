@@ -15,6 +15,7 @@ urlpatterns = [
     # Caminho para contato único - Pega como parametro um inteiro que seria o ID do contato
     # OBS: por padrão, sempre colocar uma barra final para não gerar problemas
     path('contact/<int:contact_id>/detail/', views.contact, name='contact'), #type: ignore
+    path('contact/create/', views.create, name='create')
 
     
 ]
