@@ -12,7 +12,7 @@ def create(request):
     # Verificação se a requisição é um POST -> envia dados
     if request.method == 'POST':
         # Cria um objerto de ContactForm com os dados que vieram do POST
-        form = ContactForm(request.POST)
+        form = ContactForm(request.POST, request.FILES)
 
         # Pacotes de dados a ser enviado para o HTML
         context = {
@@ -57,7 +57,7 @@ def update(request, contact_id):
     # Verificação se a requisição é um POST -> envia dados
     if request.method == 'POST':
         # Cria um objeto de ContactForm com os dados que vieram do POST e atualiza um contato ja existente
-        form = ContactForm(request.POST, instance = contact)
+        form = ContactForm(request.POST, request.FILES, instance = contact)
 
         # Pacotes de dados a ser enviado para o HTML
         context = {

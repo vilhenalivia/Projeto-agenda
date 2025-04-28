@@ -4,25 +4,20 @@ from . import models
 
 # Criação de um form com base no nosso modelo
 class ContactForm(forms.ModelForm):
-    first_name = forms.CharField(
-        widget=forms.TextInput(
+    picture = forms.ImageField(
+        widget= forms.FileInput(
             attrs={
-                'class' : 'classe a classe b',
-                'placeholder' : 'Escreva aqui'
+                'accept':'image/*',
             }
-        ),
-        help_text= 'Texto de ajuda para o usuário',
+        )
     )
-
-    def __init__(self, *args, **kwargs ):
-        super().__init__(*args, **kwargs)
 
     #Informações relacionadas com o form
     class Meta:
         # Fomulario baseado no model Contacts
         model = models.Contact
         # Compos a serem listados no form
-        fields = ('first_name', 'last_name', 'phone', 'email', 'description', 'category')
+        fields = ('first_name', 'last_name', 'phone', 'email', 'description', 'category', 'picture',)
 
     
     # Dados limpos do formulário
