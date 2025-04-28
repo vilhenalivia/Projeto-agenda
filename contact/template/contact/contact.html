@@ -13,5 +13,25 @@
         <p><b>Description:</b> {{contact.description}} </p>
         <p><b>Category:</b> {{contact.category}} </p>
 
+        <div class="contact-links">
+            <!-- Botão de update dentro do contato-->
+            <a class="btn btn-link" href="{% url 'contact:update' contact.id %}"> Update </a>
+
+            <!-- APAGAR,CRIAR,EDITAR = METODO POST-->
+            <form action="{% url "contact:delete" contact.id %}" method="POST">
+                <!--Todo formulário do tipo POST precisa de um token- para segurança -->
+                {% csrf_token %}
+                
+                <!-- Botão de delete dentro do contato-->
+                {% if confirmation == 'no'%}
+                    <input type="hidden" name="confirmation" value="yes">
+                    <button class="btn btn-link btn-delete" type="submit"> Confirma? </button>
+                {% else %}  
+                    <button class="btn btn-link btn-delete" type="submit"> Delete </button>
+                {% endif %}
+
+            </form>
+        </div>
+
     </div>
 {% endblock content %}
