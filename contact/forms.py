@@ -14,7 +14,8 @@ class ContactForm(forms.ModelForm):
             attrs={
                 'accept':'image/*',
             }
-        )
+        ),
+        required=False
     )
 
     #Informações relacionadas com o form
