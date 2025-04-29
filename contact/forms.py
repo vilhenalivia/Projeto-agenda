@@ -54,7 +54,6 @@ class RegisterForm(UserCreationForm):
     last_name = forms.CharField( required=True, min_length=3)
     email = forms.EmailField( required=True, min_length=3)
 
-    
     #Configurar comportamentos internos do formulário
     class Meta:
         model = User # Modelo do formulário
