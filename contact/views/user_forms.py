@@ -28,6 +28,7 @@ def register(request):
     )
 
 
+@login_required(login_url='contact:login')
 def user_update(request):
     form = RegisterUpdateForm(instance= request.user)
 
@@ -85,6 +86,7 @@ def login_view(request):
         }
     )
 
+@login_required(login_url='contact:login')
 # VIEW LOGOUT   
 def logout_view(request):
     auth.logout(request)

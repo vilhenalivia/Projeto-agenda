@@ -11,18 +11,22 @@
     <!-- Menu -->
     <nav class="menu">
         <ul class="menu-list">
-            <!-- Link 1 -->
-            <li class="menu-item">
-                <a href="{% url "contact:create" %}" class= "menu-link">
-                    Create
-                </a>
-            </li>
-            <!--  Link 2  -->
-            <li class="menu-item">
-                <a href="" class= "menu-link">
-                    Link 2
-                </a>
-            </li>
+
+            <!-- Se o usuário estiver logado -->
+            {% if user.is_authenticated %}
+                <!-- Criar contato -->
+                <li class="menu-item">
+                    <a href="{% url "contact:create" %}" class= "menu-link">Create</a>
+                </li>
+                <!--Perfil - Update -->
+                <li class="menu-item">
+                    <a href="{% url "contact:user_update" %}" class= "menu-link">Profile</a>
+                </li>
+                <li class="menu-item">
+                    <a href="{% url "contact:logout" %}" class= "menu-link">Logout</a>
+                </li>
+            {% endif %}
+
         </ul>
     </nav>
 

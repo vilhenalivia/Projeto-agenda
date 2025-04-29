@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 
 from contact.forms import ContactForm
 from contact.models import Contact
 
 # View CREATE
+@login_required(login_url='contact:login')
 def create(request):
     # Monta a URL baseada no nome de uma view
     form_action = reverse('contact:create')
@@ -22,7 +24,9 @@ def create(request):
 
         # Salvamento dos dados do formulário se ele for válido
         if form.is_valid():
-            contact = form.save()
+            contact = form.save(commit=False)
+            contact.owner = request.user
+            contact.save()
             # Redireciona o usuario para criar um novo usuário
             return redirect('contact:update',contact_id = contact.pk)
 
@@ -46,10 +50,11 @@ def create(request):
     )
 
 # View UPDATE
+@login_required(login_url='contact:login')
 def update(request, contact_id):
 
     # Busca um contato no model Contact, que tenha o ID igual a contact_id e show = true
-    contact = get_object_or_404(Contact, pk = contact_id, show=True)
+    contact = get_object_or_404(Contact, pk = contact_id, show=True, owner=request.user)
 
     # Monta a URL baseada no nome de uma view
     form_action = reverse('contact:update', args=(contact_id,))
@@ -91,10 +96,11 @@ def update(request, contact_id):
     )
 
 # View DELETE
+@login_required(login_url='contact:login')
 def delete(request, contact_id):
 
     # Busca um contato no model Contact, que tenha o ID igual a contact_id e show = true
-    contact = get_object_or_404(Contact, pk = contact_id, show=True)
+    contact = get_object_or_404(Contact, pk = contact_id, show=True, owner=request.user)
 
     confirmation = request.POST.get('confirmation', 'no')
 
